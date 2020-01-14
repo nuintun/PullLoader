@@ -13,7 +13,7 @@
 @refreshedMsg: "刷新成功";
 @loadingMsg: "正在加载...";
 @btnLoadMore: "点击加载更多";
-@transition-duration: 0.3s;
+@transitionDuration: 0.3s;
 
 .pLoaderMsg:after {
   content: @pullingMsg;
@@ -84,7 +84,7 @@
 
   .stateRefreshing &,
   .stateReset & {
-    transition: height @transition-duration ease, line-height @transition-duration ease;
+    transition: height @transitionDuration ease, line-height @transitionDuration ease;
   }
 }
 
@@ -183,13 +183,13 @@
   }
 
   .stateRefreshing & {
-    transition: transform @transition-duration ease;
+    transition: transform @transitionDuration ease;
   }
 
   .stateInit &,
   .stateReset & {
     transform: translate3d(0, 0, 0);
-    transition: transform @transition-duration ease;
+    transition: transform @transitionDuration ease;
   }
 }
 

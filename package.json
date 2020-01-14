@@ -1,0 +1,21 @@
+{
+  "name": "react-pull-loader",
+  "version": "0.0.0",
+  "description": "React component for web pull to refresh and load more.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuintun/PullLoader.git"
+  },
+  "keywords": [
+    "pull",
+    "loader",
+    "refresh"
+  ],
+  "author": "nuintun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nuintun/PullLoader/issues"
+  },
+  "homepage": "https://github.com/nuintun/PullLoader#readme"
+}

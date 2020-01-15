@@ -68,7 +68,8 @@ export default class PullLoader extends React.PureComponent {
     autoLoadMore: true,
     scrollThreshold: 0,
     refreshThreshold: 72,
-    progress: PROGRESS.DISABLE
+    progress: PROGRESS.DISABLE,
+    placeholder: <div className={styles.noData}>暂无数据</div>
   };
 
   /**
@@ -85,6 +86,7 @@ export default class PullLoader extends React.PureComponent {
     refreshThreshold: propTypes.number,
     children: propTypes.func.isRequired,
     rowHeight: propTypes.number.isRequired,
+    placeholder: propTypes.oneOfType([propTypes.string, propTypes.element]),
     progress: propTypes.oneOf([PROGRESS.DISABLE, PROGRESS.START, PROGRESS.DONE])
   };
 
@@ -337,7 +339,7 @@ export default class PullLoader extends React.PureComponent {
             className={styles.pLoaderBody}
             onTransitionEnd={this.onTransitionEnd}
           >
-            {this.getVisibleItems(data, start, end).map(children)}
+            {data.length ? this.getVisibleItems(data, start, end).map(children) : hasMore ? null : placeholder}
           </div>
           {hasMore && (
             <div className={styles.pLoaderFooter}>

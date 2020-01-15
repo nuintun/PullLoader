@@ -107,9 +107,9 @@ export default class PullLoader extends React.PureComponent {
     const { viewportRef } = this;
     const { rowHeight, overscan } = this.props;
 
-    const container = viewportRef.current;
-    const scrollHeight = container.scrollTop;
-    const containerHeight = container.clientHeight;
+    const viewport = viewportRef.current;
+    const scrollHeight = viewport.scrollTop;
+    const containerHeight = viewport.clientHeight;
 
     const start = Math.max(0, Math.floor(scrollHeight / rowHeight) - overscan);
     const end = start + Math.ceil(containerHeight / rowHeight) + overscan + 1;
@@ -216,7 +216,7 @@ export default class PullLoader extends React.PureComponent {
         let pullDistance = distance - this.initialTouch.scrollTop;
 
         if (pullDistance < 0) {
-          // 修复 webview 滚动过程中 touchstart 时计算 container.scrollTop 不准
+          // 修复 webview 滚动过程中 touchstart 时计算 viewport.scrollTop 不准
           pullDistance = 0;
 
           this.initialTouch.scrollTop = distance;
@@ -246,14 +246,14 @@ export default class PullLoader extends React.PureComponent {
     }
   };
 
-  onScroll = e => {
-    const { autoLoadMore, scrollThreshold } = this.props;
-
+  onScroll = () => {
     this.updateRange();
 
+    const { autoLoadMore, scrollThreshold } = this.props;
+
     if (autoLoadMore && this.canLoadMore()) {
-      const container = e.currentTarget;
-      const scrollBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+      const viewport = this.viewportRef.current;
+      const scrollBottom = viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight;
 
       scrollBottom <= scrollThreshold && this.loadMore();
     }

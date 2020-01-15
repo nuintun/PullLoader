@@ -318,7 +318,7 @@ export default class PullLoader extends React.PureComponent {
 
   render() {
     const { range } = this.state;
-    const { data, style, children, hasMore } = this.props;
+    const { data, style, children, hasMore, placeholder } = this.props;
 
     const [start, end] = range;
 

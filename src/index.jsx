@@ -103,6 +103,14 @@ export default class PullLoader extends React.PureComponent {
 
   bodyRef = React.createRef();
 
+  get scrollTop() {
+    return this.viewportRef.current.scrollTop;
+  }
+
+  set scrollTop(scrollTop) {
+    this.viewportRef.current.scrollTop = scrollTop;
+  }
+
   getVisibleRange() {
     const { viewportRef } = this;
     const { rowHeight, overscan } = this.props;

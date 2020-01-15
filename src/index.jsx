@@ -39,7 +39,7 @@ function easing(distance) {
   const d = window.screen.availHeight;
   // Change In value
   // 提示标签最大有效拖拽距离
-  const c = d / 2.5;
+  const c = d / 3.5;
 
   return c * Math.sin((t / d) * (Math.PI / 2)) + b;
 }

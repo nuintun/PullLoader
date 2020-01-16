@@ -324,15 +324,15 @@ export default class PullLoader extends React.PureComponent {
 
     return (
       <div style={style} className={this.getClassName()}>
-        <div ref={this.viewportRef} onScroll={this.onScroll} className={styles.pLoaderScroller}>
-          <div className={styles.pLoaderSymbol} style={this.getSymbolStyle()}>
-            <div className={styles.pLoaderMsg}>
-              <i />
-            </div>
-            <div className={styles.pLoaderLoading}>
-              <i className={styles.spinning} />
-            </div>
+        <div className={styles.pLoaderSymbol} style={this.getSymbolStyle()}>
+          <div className={styles.pLoaderMsg}>
+            <i />
           </div>
+          <div className={styles.pLoaderLoading}>
+            <i className={styles.spinning} />
+          </div>
+        </div>
+        <div ref={this.viewportRef} onScroll={this.onScroll} className={styles.pLoaderScroller}>
           <div
             ref={this.bodyRef}
             style={this.getBodyStyle()}

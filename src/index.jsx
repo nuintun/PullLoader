@@ -177,8 +177,6 @@ export default class PullLoader extends React.PureComponent {
 
       return { height, lineHeight: `${height}px` };
     }
-
-    return null;
   }
 
   canLoad() {

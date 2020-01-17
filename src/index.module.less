@@ -95,8 +95,6 @@
 // 拖拽提示信息
 .pLoaderMsg {
   i {
-    will-change: transform;
-
     // Arrow down icon
     .statePulling &,
     .stateReset & {
@@ -106,6 +104,7 @@
       margin-right: 20px;
       display: inline-block;
       border-left: 1px solid;
+      will-change: transform;
       vertical-align: middle;
       transition: transform 0.3s ease;
 
@@ -117,6 +116,7 @@
         font-size: 0.5em;
         position: absolute;
         border-top: 1px solid;
+        will-change: transform;
       }
 
       &:before {

@@ -151,24 +151,6 @@ export default class PullLoader extends React.PureComponent {
     });
   }
 
-  getBodyStyle() {
-    const { data, rowHeight } = this.props;
-    const { range, pullHeight } = this.state;
-
-    const [start] = range;
-    const boxSizing = 'border-box';
-    const paddingTop = start * rowHeight;
-    const minHeight = data.length * rowHeight;
-
-    if (pullHeight) {
-      const transform = `translate3d(0, ${pullHeight}px, 0)`;
-
-      return { boxSizing, paddingTop, minHeight, transform };
-    }
-
-    return { boxSizing, paddingTop, minHeight };
-  }
-
   getSymbolStyle() {
     const { pullHeight } = this.state;
 
@@ -177,6 +159,30 @@ export default class PullLoader extends React.PureComponent {
 
       return { height, lineHeight: `${height}px` };
     }
+  }
+
+  getBodyStyle() {
+    const { pullHeight } = this.state;
+    const { data, rowHeight } = this.props;
+
+    const minHeight = data.length * rowHeight;
+
+    if (pullHeight) {
+      const transform = `translate3d(0, ${pullHeight}px, 0)`;
+
+      return { minHeight, transform };
+    }
+
+    return { minHeight };
+  }
+
+  getViewStyle() {
+    const [start] = this.state.range;
+    const { rowHeight } = this.props;
+
+    const transform = `translate3d(0, ${start * rowHeight}px, 0)`;
+
+    return { transform };
   }
 
   canLoad() {
@@ -337,7 +343,9 @@ export default class PullLoader extends React.PureComponent {
             className={styles.pLoaderBody}
             onTransitionEnd={this.onTransitionEnd}
           >
-            {data.length ? this.getVisibleItems(data, start, end).map(children) : hasMore ? null : placeholder}
+            <div style={this.getViewStyle()}>
+              {data.length ? this.getVisibleItems(data, start, end).map(children) : hasMore ? null : placeholder}
+            </div>
           </div>
           {hasMore && (
             <div className={styles.pLoaderFooter}>

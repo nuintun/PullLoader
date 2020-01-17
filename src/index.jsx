@@ -10,7 +10,6 @@ import styles from './index.module.less';
 import React from 'react';
 import propTypes from 'prop-types';
 import classNames from 'classnames';
-import memoizeOne from 'memoize-one';
 
 const STATS = {
   INIT: styles.stateInit,
@@ -137,9 +136,14 @@ export default class PullLoader extends React.PureComponent {
     }
   }
 
-  getVisibleItems = memoizeOne((data, start, end) => {
+  getVisibleItems() {
+    const { data } = this.props;
+    const { range } = this.state;
+
+    const [start, end] = range;
+
     return data.slice(start, end);
-  });
+  }
 
   getClassName() {
     const { status } = this.state;
@@ -321,10 +325,7 @@ export default class PullLoader extends React.PureComponent {
   }
 
   render() {
-    const { range } = this.state;
     const { data, style, children, hasMore, placeholder } = this.props;
-
-    const [start, end] = range;
 
     return (
       <div style={style} className={this.getClassName()}>
@@ -344,7 +345,7 @@ export default class PullLoader extends React.PureComponent {
             onTransitionEnd={this.onTransitionEnd}
           >
             <div style={this.getViewStyle()}>
-              {data.length ? this.getVisibleItems(data, start, end).map(children) : hasMore ? null : placeholder}
+              {data.length ? this.getVisibleItems().map(children) : hasMore ? null : placeholder}
             </div>
           </div>
           {hasMore && (

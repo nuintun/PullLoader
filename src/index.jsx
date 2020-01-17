@@ -346,16 +346,16 @@ export default class PullLoader extends React.PureComponent {
           >
             <div style={this.getViewStyle()}>
               {data.length ? this.getVisibleItems().map(children) : hasMore ? null : placeholder}
+              {hasMore && (
+                <div className={styles.pLoaderFooter}>
+                  <div className={styles.pLoaderBtn} onClick={this.loadMore} />
+                  <div className={styles.pLoaderLoading}>
+                    <i className={styles.spinning} />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-          {hasMore && (
-            <div className={styles.pLoaderFooter}>
-              <div className={styles.pLoaderBtn} onClick={this.loadMore} />
-              <div className={styles.pLoaderLoading}>
-                <i className={styles.spinning} />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     );

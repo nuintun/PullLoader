@@ -91,7 +91,7 @@ export default class PullLoader extends React.PureComponent {
 
   state = {
     range: [0, 0],
-    pullHeight: 0,
+    offset: 0,
     status: STATS.INIT
   };
 
@@ -156,23 +156,23 @@ export default class PullLoader extends React.PureComponent {
   }
 
   getSymbolStyle() {
-    const { pullHeight } = this.state;
+    const { offset } = this.state;
 
-    if (pullHeight) {
-      const height = Math.max(48, pullHeight);
+    if (offset) {
+      const height = Math.max(48, offset);
 
       return { height, lineHeight: `${height}px` };
     }
   }
 
   getBodyStyle() {
-    const { pullHeight } = this.state;
+    const { offset } = this.state;
     const { data, rowHeight } = this.props;
 
     const minHeight = data.length * rowHeight;
 
-    if (pullHeight) {
-      const transform = `translate3d(0, ${pullHeight}px, 0)`;
+    if (offset) {
+      const transform = `translate3d(0, ${offset}px, 0)`;
 
       return { minHeight, transform };
     }
@@ -240,12 +240,12 @@ export default class PullLoader extends React.PureComponent {
           this.initialTouch.scrollTop = distance;
         }
 
-        const pullHeight = easing(pullDistance);
+        const offset = easing(pullDistance);
 
         // 减弱滚动
-        pullHeight && e.preventDefault();
+        offset && e.preventDefault();
 
-        this.setState({ pullHeight, status: pullHeight >= refreshThreshold ? STATS.ENOUGH : STATS.PULLING });
+        this.setState({ offset, status: offset >= refreshThreshold ? STATS.ENOUGH : STATS.PULLING });
       }
     }
   };
@@ -254,12 +254,12 @@ export default class PullLoader extends React.PureComponent {
     if (this.canRefresh()) {
       if (this.state.status === STATS.ENOUGH) {
         // Refreshing
-        this.setState({ pullHeight: 0, status: STATS.REFRESHING });
+        this.setState({ offset: 0, status: STATS.REFRESHING });
       } else if (!this.viewportRef.current.scrollTop) {
         // Reset
-        this.setState({ pullHeight: 0, status: STATS.RESET });
+        this.setState({ offset: 0, status: STATS.RESET });
       } else {
-        this.setState({ pullHeight: 0, status: STATS.INIT });
+        this.setState({ offset: 0, status: STATS.INIT });
       }
     }
   };
@@ -285,11 +285,11 @@ export default class PullLoader extends React.PureComponent {
         case STATS.REFRESHING:
           this.props.onRefresh(
             () => {
-              this.setState({ pullHeight: 0, status: STATS.REFRESHED });
+              this.setState({ offset: 0, status: STATS.REFRESHED });
               // Close success message after 300ms
               setTimeout(() => this.setState({ status: STATS.INIT }), 300);
             },
-            () => this.setState({ pullHeight: 0, status: STATS.RESET })
+            () => this.setState({ offset: 0, status: STATS.RESET })
           );
           break;
         case STATS.RESET:
